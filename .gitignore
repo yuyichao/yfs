@@ -8,3 +8,5 @@ yfs
 *.so
 *.a
 *.lib
+*.log
+
