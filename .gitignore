@@ -2,4 +2,9 @@
 !.gitignore
 *~
 .*/
-*.lst
+tmp/
+yfs
+*.o
+*.so
+*.a
+*.lib
