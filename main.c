@@ -15,7 +15,7 @@ int count = 0;
 static int yfs_create(const char* path, mode_t mode
 		      , struct fuse_file_info *fi)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s, mode= %o\n", path, mode);
 	fflush(logfp);
 	int fd = creat(path, mode);
@@ -27,7 +27,7 @@ static int yfs_create(const char* path, mode_t mode
 
 static int yfs_access(const char *path, int amode)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s, amode= %o\n", path, amode);
 	fflush(logfp);
 	return access(path, amode) == -1 ? -errno : 0;
@@ -35,7 +35,7 @@ static int yfs_access(const char *path, int amode)
 
 static int yfs_getattr(const char *path, struct stat *stbuf)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	return lstat(path,stbuf) == -1 ? -errno : 0;
@@ -43,7 +43,7 @@ static int yfs_getattr(const char *path, struct stat *stbuf)
 
 static int yfs_readlink(const char *path, char *buf, size_t bufsize)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s, bufsize= %d\n", path, bufsize);
 	fflush(logfp);
 	int size = readlink(path, buf, bufsize);
@@ -58,7 +58,7 @@ static int yfs_readlink(const char *path, char *buf, size_t bufsize)
 
 static int yfs_mknod(const char *path, mode_t mode, dev_t dev)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s, mode= %o\n", path, mode);
 	fflush(logfp);
 	return mknod(path, mode, dev) == -1 ? -errno : 0;
@@ -66,7 +66,7 @@ static int yfs_mknod(const char *path, mode_t mode, dev_t dev)
 
 static int yfs_mkdir(const char *path, mode_t mode)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s, mode= %o\n", path, mode);
 	fflush(logfp);
 	return mkdir(path, mode) == -1 ? -errno : 0;
@@ -74,7 +74,7 @@ static int yfs_mkdir(const char *path, mode_t mode)
 
 static int yfs_unlink(const char *path)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	return unlink(path) == -1 ? -errno : 0;
@@ -82,7 +82,7 @@ static int yfs_unlink(const char *path)
 
 static int yfs_rmdir(const char *path)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	return rmdir(path) == -1 ? -errno : 0;
@@ -90,7 +90,7 @@ static int yfs_rmdir(const char *path)
 
 static int yfs_symlink(const char *path1, const char *path2)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path1= %s, path2= %s\n", path1, path2);
 	fflush(logfp);
 	return symlink(path1, path2) == -1 ? -errno : 0;
@@ -98,7 +98,7 @@ static int yfs_symlink(const char *path1, const char *path2)
 
 static int yfs_rename(const char *old, const char *new)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "old= %s, new= %s\n", old, new);
 	fflush(logfp);
 	return rename(old, new) == -1 ? -errno : 0;
@@ -106,7 +106,7 @@ static int yfs_rename(const char *old, const char *new)
 
 static int yfs_link(const char *path1, const char *path2)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path1= %s, path2= %s\n", path1, path2);
 	fflush(logfp);
 	return link(path1, path2) == -1 ? -errno : 0;
@@ -114,7 +114,7 @@ static int yfs_link(const char *path1, const char *path2)
 
 static int yfs_chmod(const char *path, mode_t mode)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s, mode= %o\n", path, mode);
 	fflush(logfp);
 	return chmod(path, mode) == -1 ? -errno : 0;
@@ -122,7 +122,7 @@ static int yfs_chmod(const char *path, mode_t mode)
 
 static int yfs_chown(const char *path, uid_t owner, gid_t group)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s, owner= %d, group= %d\n", path, owner, group);
 	fflush(logfp);
 	return chown(path, owner, group) == -1 ? -errno : 0;
@@ -130,7 +130,7 @@ static int yfs_chown(const char *path, uid_t owner, gid_t group)
 
 static int yfs_truncate(const char *path, off_t length)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	return truncate(path, length) == -1 ? -errno : 0;
@@ -138,7 +138,7 @@ static int yfs_truncate(const char *path, off_t length)
 
 static int yfs_utime(const char *path, struct utimbuf *times)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	return utime(path, times) == -1 ? -errno : 0;
@@ -147,7 +147,7 @@ static int yfs_utime(const char *path, struct utimbuf *times)
 static int yfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
                          off_t offset, struct fuse_file_info *fi)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	struct dirent *dp;
@@ -162,7 +162,7 @@ static int yfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 
 static int yfs_open(const char *path, struct fuse_file_info *fi)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	int fd = open(path, fi->flags);
@@ -176,7 +176,7 @@ static int yfs_read(const char *path, char *buf, size_t size, off_t offset,
 		    struct fuse_file_info *fi)
 {
 	int fd = (int)fi->fh;
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	int count = pread(fd, buf, size, offset);
@@ -189,7 +189,7 @@ static int yfs_write(const char *path, const char *buf, size_t size, off_t offse
 		     struct fuse_file_info *fi)
 {
 	int fd = (int)fi->fh;
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	int count = pwrite(fd, buf, size, offset);
@@ -200,7 +200,7 @@ static int yfs_write(const char *path, const char *buf, size_t size, off_t offse
 
 static int yfs_statfs(const char *path, struct statvfs *buf)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	return statvfs(path, buf) == -1 ? -errno : 0;
@@ -208,7 +208,7 @@ static int yfs_statfs(const char *path, struct statvfs *buf)
 
 static int yfs_release(const char *path, struct fuse_file_info *fi)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	return close((int)fi->fh) == -1 ? -errno : 0;
@@ -216,7 +216,7 @@ static int yfs_release(const char *path, struct fuse_file_info *fi)
 
 static int yfs_opendir(const char *path, struct fuse_file_info *fi)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	DIR *dirp = opendir(path);
@@ -228,7 +228,7 @@ static int yfs_opendir(const char *path, struct fuse_file_info *fi)
 
 static int yfs_releasedir(const char *path, struct fuse_file_info *fi)
 {
-	fprintf(logfp, "%d@%d:in %s()\n", count++, time(NULL), __func__);
+	fprintf(logfp, "%d@%d,by %d:in %s()\n", count++, time(NULL), getpid(), __func__);
 	fprintf(logfp, "path= %s\n", path);
 	fflush(logfp);
 	return closedir((DIR *)fi->fh) == -1 ? -errno : 0;
